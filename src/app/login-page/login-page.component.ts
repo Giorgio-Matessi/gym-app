@@ -10,7 +10,9 @@ import { FormBuilder } from '@angular/forms';
 export class LoginPageComponent {
   username: string | undefined = '';
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {
+    localStorage.removeItem('username');
+  }
 
   checkoutForm = this.formBuilder.group({
     username: '',

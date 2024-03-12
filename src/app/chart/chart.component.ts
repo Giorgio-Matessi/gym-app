@@ -8,6 +8,7 @@ import {
 } from '../shared/api';
 import { lineChartOptions } from '../shared/chart-details';
 import { Item, record } from '../shared/models';
+import { Colors } from 'chart.js';
 
 @Component({
   selector: 'app-chart',
@@ -16,12 +17,21 @@ import { Item, record } from '../shared/models';
 })
 export class ChartComponent {
   public chart: any;
-
-  username: string = '';
+  public username: string = '';
+  public exerciseList: string[] = [];
 
   ngOnInit(): void {
     this.username = localStorage.getItem('username') || '';
-    //this.createChart();
+
+    getAllExerciseNamesForUser('test1').then((data) => {
+      data.json().then((data) => {
+        data.map((item: Item) => {
+          this.exerciseList.push(item.exercise_name);
+        });
+        console.log(this.exerciseList);
+      });
+    });
+    this.createChart();
   }
 
   createChart() {

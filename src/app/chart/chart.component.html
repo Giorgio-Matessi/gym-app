@@ -1,6 +1,14 @@
-<div class="chart-container">
+<app-header></app-header>
+<div>
   <canvas id="MyChart">{{ chart }}</canvas>
 </div>
+<mat-selection-list #list style="padding-right: 70%">
+  <mat-list-option
+    #x
+    *ngFor="let ex of exerciseList"
+    [disabled]="list.selectedOptions.selected.length > 1 && !x.selected"
+    >{{ ex }}</mat-list-option
+  >
+</mat-selection-list>
 
-<p>{{ username }}</p>
 <router-outlet></router-outlet>

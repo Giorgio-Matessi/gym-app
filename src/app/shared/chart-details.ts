@@ -1,6 +1,6 @@
 export var lineChartOptions = {
   aspectRatio: 2.5,
-  tension: 0.0,
+  tension: 0.1,
   scales: {
     x: {
       display: true,

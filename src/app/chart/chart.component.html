@@ -1,14 +1,18 @@
 <app-header></app-header>
+<mat-form-field>
+  <mat-label>Choose Exercise</mat-label>
+  <mat-select>
+    <mat-option
+      (click)="onMainExerciseSelect(exercise)"
+      *ngFor="let exercise of exerciseList"
+      [value]="exercise"
+    >
+      {{ exercise }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <div>
   <canvas id="MyChart">{{ chart }}</canvas>
 </div>
-<mat-selection-list #list style="padding-right: 70%">
-  <mat-list-option
-    #x
-    *ngFor="let ex of exerciseList"
-    [disabled]="list.selectedOptions.selected.length > 1 && !x.selected"
-    >{{ ex }}</mat-list-option
-  >
-</mat-selection-list>
 
 <router-outlet></router-outlet>

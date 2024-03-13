@@ -8,7 +8,11 @@ import {
 } from '../shared/api';
 import { lineChartOptions } from '../shared/chart-details';
 import { Item, record } from '../shared/models';
-import { Colors } from 'chart.js';
+import {
+  calculateVolume,
+  sortDates,
+  createChartData,
+} from '../shared/data-format';
 
 @Component({
   selector: 'app-chart',
@@ -17,39 +21,51 @@ import { Colors } from 'chart.js';
 })
 export class ChartComponent {
   public chart: any;
+
   public username: string = '';
   public exerciseList: string[] = [];
+  public records: record[] = [];
 
   ngOnInit(): void {
     this.username = localStorage.getItem('username') || '';
 
-    getAllExerciseNamesForUser('test1').then((data) => {
+    getAllExerciseNamesForUser(this.username).then((data) => {
       data.json().then((data) => {
         data.map((item: Item) => {
           this.exerciseList.push(item.exercise_name);
         });
-        console.log(this.exerciseList);
       });
     });
-    this.createChart();
+    this.createBasicChart();
   }
 
-  createChart() {
+  createBasicChart() {
     this.chart = new Chart('MyChart', {
       type: 'line', //this denotes tha type of chart
 
       data: {
         // values on X-Axis
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+        labels: [],
         datasets: [
           {
-            label: 'Sales',
-            data: ['467', '576', '572', '79', '92', '574', '573', '576'],
-            backgroundColor: 'blue',
+            label: '',
+            data: [],
           },
         ],
       },
       options: lineChartOptions,
+    });
+  }
+
+  onMainExerciseSelect(exerciseSelected: string) {
+    getExerciseRecords(this.username, exerciseSelected).then((data) => {
+      data.json().then((data) => {
+        this.records = data.records;
+        sortDates(this.records);
+
+        this.chart.data = createChartData(this.records, exerciseSelected);
+        this.chart.update();
+      });
     });
   }
 }

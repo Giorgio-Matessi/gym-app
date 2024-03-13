@@ -23,9 +23,7 @@ export function createChartData(records: record[], exerciseSelected: string) {
     labels: records.map((record) => record.date),
     datasets: [
       {
-        data: records.map(
-          (record) => record.repitiion_count * record.weight * record.set_count
-        ),
+        data: calculateVolume(records),
         label: exerciseSelected,
       },
     ],
@@ -42,9 +40,7 @@ export function createSecondaryChartData(
     labels: records.map((record) => record.date),
     datasets: [
       {
-        data: records.map(
-          (record) => record.repitiion_count * record.weight * record.set_count
-        ),
+        data: calculateVolume(records),
         label: exerciseSelected,
       },
     ],

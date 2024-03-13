@@ -8,11 +8,8 @@ import {
 } from '../shared/api';
 import { lineChartOptions } from '../shared/chart-details';
 import { Item, record } from '../shared/models';
-import {
-  calculateVolume,
-  sortDates,
-  createChartData,
-} from '../shared/data-format';
+import { sortDates, createChartData } from '../shared/data-format';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chart',
@@ -26,8 +23,14 @@ export class ChartComponent {
   public exerciseList: string[] = [];
   public records: record[] = [];
 
+  constructor(private router: Router) {}
+
   ngOnInit(): void {
     this.username = localStorage.getItem('username') || '';
+
+    if (this.username === '' || this.username === 'undefined') {
+      this.router.navigateByUrl('/chart');
+    }
 
     getAllExerciseNamesForUser(this.username).then((data) => {
       data.json().then((data) => {

@@ -31,20 +31,18 @@ export function createChartData(records: record[], exerciseSelected: string) {
   };
   return chartData;
 }
-
-export function createSecondaryChartData(
-  records: record[],
-  exerciseSelected: string
+export function validateDate(date: string | null | undefined) {
+  return !isNaN(Date.parse(date?.toString() || ''));
+}
+export function validateNumber(num: number) {
+  return !isNaN(num);
+}
+export function validateString(str: string) {
+  return str !== '';
+}
+export function validateExerciseName(
+  exerciseName: string,
+  exerciseList: string[]
 ) {
-  let chartData = {
-    labels: records.map((record) => record.date),
-    datasets: [
-      {
-        data: calculateVolume(records),
-        label: exerciseSelected,
-      },
-    ],
-    options: lineChartOptions,
-  };
-  return chartData;
+  return exerciseList.includes(exerciseName);
 }

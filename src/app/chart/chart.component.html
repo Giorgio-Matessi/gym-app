@@ -1,18 +1,165 @@
 <app-header></app-header>
-<mat-form-field>
-  <mat-label>Choose Exercise</mat-label>
-  <mat-select>
-    <mat-option
-      (click)="onMainExerciseSelect(exercise)"
-      *ngFor="let exercise of exerciseList"
-      [value]="exercise"
+<div style="display: flex; justify-content: center">
+  <mat-form-field style="padding: 10px">
+    <mat-label>Choose Exercise</mat-label>
+    <mat-select>
+      <mat-option
+        (click)="onMainExerciseSelect(exercise)"
+        *ngFor="let exercise of exerciseList"
+        [value]="exercise"
+      >
+        {{ exercise }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div style="padding: 10px">
+    <mat-form-field>
+      <mat-label>Add New Exercise</mat-label>
+      <input [(ngModel)]="newExercise" matInput />
+    </mat-form-field>
+    <button
+      style="height: auto; padding: 10px"
+      mat-button
+      color="primary"
+      (click)="onAddExercise()"
     >
-      {{ exercise }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<div>
-  <canvas id="MyChart">{{ chart }}</canvas>
+      Add
+    </button>
+  </div>
+</div>
+
+<div style="padding: 10px">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Enter a New Record</mat-card-title>
+    </mat-card-header>
+    <mat-stepper [linear]="true" orientation="horizontal" #stepper>
+      <mat-step [stepControl]="dateFormGroup">
+        <form [formGroup]="dateFormGroup">
+          <ng-template matStepLabel>Enter a Date</ng-template>
+          <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="firstCtrl"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="repetitionFormGroup" label="Repetition Count">
+        <form [formGroup]="repetitionFormGroup">
+          <mat-form-field>
+            <mat-label># of Reps</mat-label>
+            <input
+              matInput
+              formControlName="secondCtrl"
+              placeholder="3"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="weightFormGroup" label="Weight (lbs.)">
+        <form [formGroup]="weightFormGroup">
+          <mat-form-field>
+            <mat-label>Weight</mat-label>
+            <input
+              matInput
+              formControlName="secondCtrl"
+              placeholder="100"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="setFormGroup" label="Set Count">
+        <form [formGroup]="setFormGroup">
+          <mat-form-field>
+            <mat-label># of Sets</mat-label>
+            <input
+              matInput
+              formControlName="secondCtrl"
+              placeholder="3"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="onAddRecord(); stepper.reset()">
+            Add
+          </button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-card>
+</div>
+
+<div class="container" style="padding: 15px">
+  <div class="mat-elevation-z8">
+    <canvas id="MyChart">{{ chart }}</canvas>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div>
+    <table mat-table [dataSource]="records" class="mat-elevation-z8 table">
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="repitiion_count">
+        <th mat-header-cell *matHeaderCellDef>Repitition Count</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.repitiion_count }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef>Weight</th>
+        <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="set_count">
+        <th mat-header-cell *matHeaderCellDef>Set Count</th>
+        <td mat-cell *matCellDef="let element">{{ element.set_count }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
 </div>
 
 <router-outlet></router-outlet>

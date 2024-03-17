@@ -10,17 +10,13 @@ import { FormBuilder } from '@angular/forms';
 export class LoginPageComponent {
   username: string | undefined = '';
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private router: Router) {
     localStorage.removeItem('username');
   }
 
-  checkoutForm = this.formBuilder.group({
-    username: '',
-  });
-
   onSubmit() {
-    if (this.checkoutForm.value.username) {
-      localStorage.setItem('username', this.checkoutForm.value.username);
+    if (this.username) {
+      localStorage.setItem('username', this.username);
       this.router.navigateByUrl('/chart');
     }
   }

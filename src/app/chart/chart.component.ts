@@ -109,7 +109,8 @@ export class ChartComponent {
 
     let newItem: Item = {
       username: this.username,
-      exercise_name: this.newExercise,
+      exercise_name:
+        this.newExercise.charAt(0).toUpperCase() + this.newExercise.slice(1),
       records: [],
     };
 

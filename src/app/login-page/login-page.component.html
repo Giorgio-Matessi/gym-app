@@ -7,15 +7,29 @@
     <title>Login Page</title>
   </head>
   <body>
-    <h2>Enter Username</h2>
-    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="username"> Name </label>
-        <input id="username" type="text" formControlName="username" />
-      </div>
-
-      <button class="button" type="submit">Login</button>
-    </form>
+    <div style="display: flex; justify-content: center; padding-top: 100px">
+      <mat-card>
+        <mat-card-header
+          style="display: flex; justify-content: center; padding: 10px"
+        >
+          <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <div style="padding: 10px; height: fit-content">
+          <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input [(ngModel)]="username" matInput />
+          </mat-form-field>
+        </div>
+        <button
+          style="padding: 20px"
+          mat-button
+          color="primary"
+          (click)="onSubmit()"
+        >
+          Login
+        </button>
+      </mat-card>
+    </div>
   </body>
 </html>
 <router-outlet></router-outlet>

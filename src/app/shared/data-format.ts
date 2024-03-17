@@ -44,5 +44,8 @@ export function validateExerciseName(
   exerciseName: string,
   exerciseList: string[]
 ) {
-  return exerciseList.includes(exerciseName);
+  return (
+    exerciseList.includes(exerciseName) ||
+    exerciseList.includes(exerciseName + 's')
+  );
 }

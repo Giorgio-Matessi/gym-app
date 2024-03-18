@@ -1,7 +1,7 @@
 import { Item } from './models';
 
 var apiBaseSlug =
-  'https://enkbrf1xqk.execute-api.us-east-1.amazonaws.com/standard/items';
+  'https://enkbrf1xqk.execute-api.us-east-1.amazonaws.com/items';
 
 export async function getAllExerciseNamesForUser(user: string) {
   return await fetch(`${apiBaseSlug}/${user}`);

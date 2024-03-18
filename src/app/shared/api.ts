@@ -27,6 +27,10 @@ export async function postItem(item: Item) {
     method: 'PUT',
     body: generateDataString(item),
     headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers':
+        'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+      'Access-Control-Allow-Credentials': 'true',
       'Content-Type': 'application/json',
     },
   });

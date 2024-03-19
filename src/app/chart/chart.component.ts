@@ -120,6 +120,18 @@ export class ChartComponent {
     });
   }
 
+  onDeleteExercise() {
+    deleteExercise(this.username, this.exerciseSelected).then(() => {
+      this._snackBar.open('Exercise Successfully Deleted', 'Close');
+      this.exerciseList = this.exerciseList.filter(
+        (item) => item !== this.exerciseSelected
+      );
+      this.chart.data = createChartData([], '');
+      this.table.renderRows();
+      this.chart.update();
+    });
+  }
+
   //TODO: Add mat-calender to the date input
   onAddRecord() {
     if (this.exerciseSelected === '') {
@@ -166,7 +178,9 @@ export class ChartComponent {
     };
 
     postItem(newItem).then(() => {
-      this._snackBar.open('Record Successfully Submitted', 'Close');
+      this._snackBar.open('Record Successfully Submitted', undefined, {
+        duration: 2000,
+      });
       this.table.renderRows();
       this.chart.data = createChartData(this.records, this.exerciseSelected);
       this.chart.update();
@@ -177,6 +191,12 @@ export class ChartComponent {
     this.exerciseSelected = exerciseSelected;
     getExerciseRecords(this.username, exerciseSelected).then((data) => {
       data.json().then((data) => {
+        if (data.records === undefined) {
+          this.records = [];
+          this.chart.data = createChartData(this.records, exerciseSelected);
+          this.chart.update();
+          return;
+        }
         this.records = data.records;
         sortDates(this.records);
 

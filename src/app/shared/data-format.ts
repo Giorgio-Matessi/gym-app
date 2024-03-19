@@ -2,6 +2,12 @@ import { record } from './models';
 import { lineChartOptions } from './chart-details';
 
 export function sortDates(records: record[]) {
+  if (records === undefined) {
+    return;
+  }
+  if (records.length === 0) {
+    return;
+  }
   var isDescending = false;
   records.sort((a, b) =>
     isDescending

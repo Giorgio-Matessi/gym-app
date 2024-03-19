@@ -28,6 +28,14 @@
     </button>
   </div>
 </div>
+<button
+  style="height: auto; padding: 10px"
+  mat-button
+  color="primary"
+  (click)="onDeleteExercise()"
+>
+  Delete Currently Selected Exercise
+</button>
 
 <div style="padding: 10px">
   <mat-card>
@@ -56,7 +64,23 @@
           </div>
         </form>
       </mat-step>
-
+      <mat-step [stepControl]="setFormGroup" label="Set Count">
+        <form [formGroup]="setFormGroup">
+          <mat-form-field>
+            <mat-label># of Sets</mat-label>
+            <input
+              matInput
+              formControlName="secondCtrl"
+              placeholder="3"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
       <mat-step [stepControl]="repetitionFormGroup" label="Repetition Count">
         <form [formGroup]="repetitionFormGroup">
           <mat-form-field>
@@ -83,24 +107,6 @@
               matInput
               formControlName="secondCtrl"
               placeholder="100"
-              required
-            />
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-
-      <mat-step [stepControl]="setFormGroup" label="Set Count">
-        <form [formGroup]="setFormGroup">
-          <mat-form-field>
-            <mat-label># of Sets</mat-label>
-            <input
-              matInput
-              formControlName="secondCtrl"
-              placeholder="3"
               required
             />
           </mat-form-field>

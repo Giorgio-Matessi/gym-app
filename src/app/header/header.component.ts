@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   username: string = '';
   constructor() {
-    this.username = localStorage.getItem('username') || '';
+    this.username = localStorage.getItem('username') || ''.toUpperCase();
   }
 }

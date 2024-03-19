@@ -11,8 +11,8 @@ export async function getExerciseRecords(user: string, exercise_name: string) {
   return await fetch(`${apiBaseSlug}/${user}/${exercise_name}`);
 }
 
-export async function deleteExercise(user: string) {
-  return await fetch(`${apiBaseSlug}/${user}`, {
+export async function deleteExercise(user: string, exercise_name: string) {
+  return await fetch(`${apiBaseSlug}/${user}/${exercise_name}`, {
     method: 'DELETE',
   });
 }
